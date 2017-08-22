@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  background: #aaa;
+  text-align: center;
+}
+
+#fullBoard {
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 3px;
+  background: #fafffa;
+}
+
+#title {
+  margin: 0 0 0 0;
+  padding: 10px;
+  border-radius: 3px 3px 0 0;
+  border-bottom: 5px solid #fff;
+  cursor: default;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+#title, .showing {
+  background: #006400;
+  color: #fff;
+}
+
+.showing {
+  border-color: #0b0;
+}
+
+#title, .sortable {
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  cursor: default;
+  font-weight: 600;
+  width: 100%;
+}
+
+thead th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 53px;
+  -webkit-transition: background .2s, border-bottom .2s, color .2s;
+  transition: background .2s, border-bottom .2s, color .2s;
+  border-bottom: 5px solid #eee;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+th, tr:nth-child(even) {
+  background: #eee;
+}
+
+th {
+  font-size: 1.3em;
+}
+
+.camper, .recent {
+  border-right: 2px solid #eee;
+}
+
+.rank {
+  font-weight: bold;
+  font-size: 1.4em;
+  width: 10%;
+}
+
+.camper {
+  text-align: left;
+  width: 40%;
+}
+
+.points {
+  width: 25%;
+}
+
+.avatar {
+  width: 50px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+  color: #060;
+  font-weight: bold;
+  -webkit-transition: text-shadow .3s;
+  transition: text-shadow .3s;
+}
+
+a:hover {
+  text-shadow: 0 0 40px #0c0;
+}
