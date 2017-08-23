@@ -48,9 +48,9 @@ thead th {
   position: -webkit-sticky;
   position: sticky;
   top: 53px;
-  -webkit-transition: background .2s, border-bottom .2s, color .2s;
-  transition: background .2s, border-bottom .2s, color .2s;
   border-bottom: 5px solid #eee;
+  -webkit-transition: background .2s, color .2s;
+  transition: background .2s, color .2s;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
