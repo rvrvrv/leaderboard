@@ -44,10 +44,11 @@ table {
   width: 100%;
 }
 
-thead th {
+th {
   position: -webkit-sticky;
   position: sticky;
   top: 53px;
+  font-size: 1.2em;
   border-bottom: 5px solid #eee;
   -webkit-transition: background .2s, color .1s;
   transition: background .2s, color .1s;
@@ -68,10 +69,6 @@ tr {
 
 tr:hover {
   background: rgba(0, 100, 0, .2);
-}
-
-th {
-  font-size: 1.3em;
 }
 
 .camper, .recent {
