@@ -62,7 +62,7 @@ var TableHeader = function (_React$Component) {
   // If user selects new category, display appropriate list
 
   TableHeader.prototype.handleClick = function handleClick(e) {
-    if (e.target.className !== "showing") this.props.onShowChange();
+    if (e.target.className === "sortable") this.props.onChangeDisplay();
   };
 
   TableHeader.prototype.render = function render() {
@@ -132,7 +132,7 @@ var Leaderboard = function (_React$Component2) {
         "table",
         null,
         React.createElement(TableHeader, {
-          onShowChange: this.props.onShowChange.bind(this),
+          onChangeDisplay: this.props.onChangeDisplay.bind(this),
           showing: this.props.showing
         }),
         React.createElement(
@@ -155,15 +155,22 @@ var App = function (_React$Component3) {
 
     var _this3 = _possibleConstructorReturn(this, _React$Component3.call(this, props));
 
+    _this3.handleChangeDisplay = function () {
+      _this3.setState({
+        showing: _this3.state.showing === "alltime" ? "recent" : "alltime"
+      });
+    };
+
     _this3.scrollToTop = function () {
       document.body.scrollTop = 0; // Chrome/Safari/Opera
       document.documentElement.scrollTop = 0; // IE/Firefox
     };
 
     _this3.state = {
-      recent: [],
-      alltime: [],
-      showing: "alltime"
+      recent: null,
+      alltime: null,
+      showing: "recent",
+      status: null
     };
     return _this3;
   }
@@ -178,33 +185,43 @@ var App = function (_React$Component3) {
           switch (_context.prev = _context.next) {
             case 0:
               api = "https://fcctop100.herokuapp.com/api/fccusers/top";
-              _context.next = 3;
+              recent = undefined, alltime = undefined;
+              _context.prev = 2;
+              _context.next = 5;
               return fetch(api + "/recent");
 
-            case 3:
-              _context.next = 5;
+            case 5:
+              _context.next = 7;
               return _context.sent.json();
 
-            case 5:
+            case 7:
               recent = _context.sent;
-              _context.next = 8;
+              _context.next = 10;
               return fetch(api + "/alltime");
 
-            case 8:
-              _context.next = 10;
+            case 10:
+              _context.next = 12;
               return _context.sent.json();
 
-            case 10:
+            case 12:
               alltime = _context.sent;
 
-              this.setState({ recent: recent, alltime: alltime });
+              this.setState({ recent: recent, alltime: alltime, status: 'loaded' });
+              _context.next = 19;
+              break;
 
-            case 12:
+            case 16:
+              _context.prev = 16;
+              _context.t0 = _context["catch"](2);
+
+              this.setState({ status: 'error' });
+
+            case 19:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, this);
+      }, _callee, this, [[2, 16]]);
     }));
 
     return function componentDidMount() {
@@ -214,28 +231,32 @@ var App = function (_React$Component3) {
 
   // Change which list of users to display
 
-  App.prototype.handleShowChange = function handleShowChange() {
-    this.setState({
-      showing: this.state.showing === "alltime" ? "recent" : "alltime"
-    });
-  };
-
   // Scroll back to the top of the page
 
   App.prototype.render = function render() {
     return React.createElement(
       "div",
-      { id: "fullBoard" },
+      { className: "entire-board" },
       React.createElement(
         "h2",
-        { id: "title", onClick: this.scrollToTop },
+        { className: "title", onClick: this.scrollToTop },
         "Camper Leaderboard"
       ),
-      React.createElement(Leaderboard, {
+      !this.state.status && React.createElement(
+        "h1",
+        { className: "blinking" },
+        "Retrieving data..."
+      ),
+      this.state.status === 'error' && React.createElement(
+        "h2",
+        null,
+        "Could not retrieve data. Please try again later."
+      ),
+      this.state.status === 'loaded' && React.createElement(Leaderboard, {
         recent: this.state.recent,
         alltime: this.state.alltime,
         showing: this.state.showing,
-        onShowChange: this.handleShowChange.bind(this)
+        onChangeDisplay: this.handleChangeDisplay
       })
     );
   };
