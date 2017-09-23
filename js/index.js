@@ -115,7 +115,7 @@ var Leaderboard = function (_React$Component2) {
   }
 
   Leaderboard.prototype.render = function render() {
-    // Generate all HTML for body of table
+    // Generate all User components in body of table
     var tableBody = this.props[this.props.showing].map(function (user, i) {
       return React.createElement(User, {
         rank: i + 1,

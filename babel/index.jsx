@@ -58,7 +58,7 @@ const Leaderboard = props => (
         showing={props.showing}
       />
       <tbody>
-        {// Generate all HTML for body of table
+        {// Generate all User components in body of table
           props[props.showing].map((user, i) =>
             (<User
               rank={i + 1}
@@ -103,6 +103,7 @@ class App extends React.Component {
     this.setState({
       showing: this.state.showing === 'alltime' ? 'recent' : 'alltime',
     });
+    this.scrollToTop();
   };
 
   // Scroll back to the top of the page
