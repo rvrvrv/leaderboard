@@ -1,20 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-html {
+body {
   font-family: 'Open Sans', sans-serif;
   background: #aaa;
   text-align: center;
 }
 
-#fullBoard {
+.entire-board {
   max-width: 800px;
   margin: 0 auto;
   border-radius: 3px;
   background: #fafffa;
 }
 
-#title {
-  margin: 0 0 0 0;
+.title {
+  margin: 0;
   padding: 10px;
   border-radius: 3px 3px 0 0;
   border-bottom: 5px solid #fff;
@@ -24,16 +22,12 @@ html {
   top: 0;
 }
 
-#title, .showing {
+.title, .showing {
   background: #006400;
   color: #fff;
 }
 
-.showing {
-  border-color: #0b0;
-}
-
-#title, .sortable {
+.title, .sortable {
   cursor: pointer;
 }
 
@@ -107,4 +101,17 @@ a {
 a:hover {
   font-size: 1.1em;
   text-shadow: 0 0 40px #0a0;
+}
+
+.blinking {
+  -webkit-animation: blink .5s infinite;
+          animation: blink .5s infinite;
+}
+
+@-webkit-keyframes blink {
+  50% { opacity: .5; }
+}
+
+@keyframes blink {
+  50% { opacity: .5; }
 }
