@@ -1,18 +1,18 @@
 // Generate each table row of user data
-const User = props => (
+const User = ({ rank, username, img, recentPts, alltimePts }) => (
   <tr>
-    <td className="rank">{props.rank}</td>
+    <td className="rank">{rank}</td>
     <td className="camper">
       <a
-        href={`https://www.freecodecamp.com/${props.username}`}
+        href={`https://www.freecodecamp.com/${username}`}
         target="_blank"
       >
-        <img className="avatar" src={props.img} alt={props.username} />
-        <span>{props.username}</span>
+        <img className="avatar" src={img} alt={username} />
+        <span>{username}</span>
       </a>
     </td>
-    <td className="points recent">{props.recentPts}</td>
-    <td className="points alltime">{props.alltimePts}</td>
+    <td className="points recent">{recentPts}</td>
+    <td className="points alltime">{alltimePts}</td>
   </tr>);
 
 // Display table header

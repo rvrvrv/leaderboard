@@ -9,14 +9,19 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 // Generate each table row of user data
-var User = function User(props) {
+var User = function User(_ref) {
+  var rank = _ref.rank;
+  var username = _ref.username;
+  var img = _ref.img;
+  var recentPts = _ref.recentPts;
+  var alltimePts = _ref.alltimePts;
   return React.createElement(
     "tr",
     null,
     React.createElement(
       "td",
       { className: "rank" },
-      props.rank
+      rank
     ),
     React.createElement(
       "td",
@@ -24,26 +29,26 @@ var User = function User(props) {
       React.createElement(
         "a",
         {
-          href: "https://www.freecodecamp.com/" + props.username,
+          href: "https://www.freecodecamp.com/" + username,
           target: "_blank"
         },
-        React.createElement("img", { className: "avatar", src: props.img, alt: props.username }),
+        React.createElement("img", { className: "avatar", src: img, alt: username }),
         React.createElement(
           "span",
           null,
-          props.username
+          username
         )
       )
     ),
     React.createElement(
       "td",
       { className: "points recent" },
-      props.recentPts
+      recentPts
     ),
     React.createElement(
       "td",
       { className: "points alltime" },
-      props.alltimePts
+      alltimePts
     )
   );
 };
@@ -54,16 +59,19 @@ var TableHeader = function (_React$Component) {
   _inherits(TableHeader, _React$Component);
 
   function TableHeader() {
+    var _temp, _this, _ret;
+
     _classCallCheck(this, TableHeader);
 
-    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.handleClick = function (e) {
+      if (e.target.className === 'sortable') _this.props.onChangeDisplay();
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
-
   // If user selects new category, display appropriate list
-
-  TableHeader.prototype.handleClick = function handleClick(e) {
-    if (e.target.className === "sortable") this.props.onChangeDisplay();
-  };
 
   TableHeader.prototype.render = function render() {
     return React.createElement(
@@ -85,16 +93,16 @@ var TableHeader = function (_React$Component) {
         React.createElement(
           "th",
           {
-            className: this.props.showing === "recent" && "showing" || "sortable",
-            onClick: this.handleClick.bind(this)
+            className: this.props.showing === 'recent' && 'showing' || 'sortable',
+            onClick: this.handleClick
           },
           "Recent Pts."
         ),
         React.createElement(
           "th",
           {
-            className: this.props.showing === "alltime" && "showing" || "sortable",
-            onClick: this.handleClick.bind(this)
+            className: this.props.showing === 'alltime' && 'showing' || 'sortable',
+            onClick: this.handleClick
           },
           "All-Time Pts."
         )
@@ -105,74 +113,62 @@ var TableHeader = function (_React$Component) {
   return TableHeader;
 }(React.Component);
 
-var Leaderboard = function (_React$Component2) {
-  _inherits(Leaderboard, _React$Component2);
-
-  function Leaderboard() {
-    _classCallCheck(this, Leaderboard);
-
-    return _possibleConstructorReturn(this, _React$Component2.apply(this, arguments));
-  }
-
-  Leaderboard.prototype.render = function render() {
-    // Generate all User components in body of table
-    var tableBody = this.props[this.props.showing].map(function (user, i) {
-      return React.createElement(User, {
-        rank: i + 1,
-        img: user.img,
-        username: user.username,
-        recentPts: user.recent,
-        alltimePts: user.alltime
-      });
-    });
-    return React.createElement(
-      "div",
+var Leaderboard = function Leaderboard(props) {
+  return React.createElement(
+    "div",
+    null,
+    React.createElement(
+      "table",
       null,
+      React.createElement(TableHeader, {
+        onChangeDisplay: props.onChangeDisplay.bind(undefined),
+        showing: props.showing
+      }),
       React.createElement(
-        "table",
+        "tbody",
         null,
-        React.createElement(TableHeader, {
-          onChangeDisplay: this.props.onChangeDisplay.bind(this),
-          showing: this.props.showing
-        }),
-        React.createElement(
-          "tbody",
-          null,
-          tableBody
-        )
+        // Generate all User components in body of table
+        props[props.showing].map(function (user, i) {
+          return React.createElement(User, {
+            rank: i + 1,
+            img: user.img,
+            username: user.username,
+            recentPts: user.recent,
+            alltimePts: user.alltime
+          });
+        })
       )
-    );
-  };
+    )
+  );
+};
 
-  return Leaderboard;
-}(React.Component);
-
-var App = function (_React$Component3) {
-  _inherits(App, _React$Component3);
+var App = function (_React$Component2) {
+  _inherits(App, _React$Component2);
 
   function App(props) {
     _classCallCheck(this, App);
 
-    var _this3 = _possibleConstructorReturn(this, _React$Component3.call(this, props));
+    var _this2 = _possibleConstructorReturn(this, _React$Component2.call(this, props));
 
-    _this3.handleChangeDisplay = function () {
-      _this3.setState({
-        showing: _this3.state.showing === "alltime" ? "recent" : "alltime"
+    _this2.handleChangeDisplay = function () {
+      _this2.setState({
+        showing: _this2.state.showing === 'alltime' ? 'recent' : 'alltime'
       });
+      _this2.scrollToTop();
     };
 
-    _this3.scrollToTop = function () {
+    _this2.scrollToTop = function () {
       document.body.scrollTop = 0; // Chrome/Safari/Opera
       document.documentElement.scrollTop = 0; // IE/Firefox
     };
 
-    _this3.state = {
+    _this2.state = {
       recent: null,
       alltime: null,
-      showing: "recent",
+      showing: 'recent',
       status: null
     };
-    return _this3;
+    return _this2;
   }
 
   // Fetch FCC user data via async/await
@@ -184,44 +180,45 @@ var App = function (_React$Component3) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              api = "https://fcctop100.herokuapp.com/api/fccusers/top";
-              recent = undefined, alltime = undefined;
-              _context.prev = 2;
-              _context.next = 5;
+              api = 'https://fcctop100.herokuapp.com/api/fccusers/top';
+              recent = undefined;
+              alltime = undefined;
+              _context.prev = 3;
+              _context.next = 6;
               return fetch(api + "/recent");
 
-            case 5:
-              _context.next = 7;
+            case 6:
+              _context.next = 8;
               return _context.sent.json();
 
-            case 7:
+            case 8:
               recent = _context.sent;
-              _context.next = 10;
+              _context.next = 11;
               return fetch(api + "/alltime");
 
-            case 10:
-              _context.next = 12;
+            case 11:
+              _context.next = 13;
               return _context.sent.json();
 
-            case 12:
+            case 13:
               alltime = _context.sent;
 
               this.setState({ recent: recent, alltime: alltime, status: 'loaded' });
-              _context.next = 19;
+              _context.next = 20;
               break;
 
-            case 16:
-              _context.prev = 16;
-              _context.t0 = _context["catch"](2);
+            case 17:
+              _context.prev = 17;
+              _context.t0 = _context["catch"](3);
 
               this.setState({ status: 'error' });
 
-            case 19:
+            case 20:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, this, [[2, 16]]);
+      }, _callee, this, [[3, 17]]);
     }));
 
     return function componentDidMount() {
@@ -264,4 +261,4 @@ var App = function (_React$Component3) {
   return App;
 }(React.Component);
 
-ReactDOM.render(React.createElement(App, null), document.getElementById("app"));
+ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
