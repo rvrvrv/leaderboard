@@ -86,12 +86,13 @@ class App extends React.Component {
 
   // Fetch FCC user data via async/await
   async componentDidMount() {
-    const api = 'https://fcctop100.herokuapp.com/api/fccusers/top';
-    let recent;
-    let alltime;
+    // The FCC API is down, so we're pulling from mock endpoints
+    const apiRecent = 'https://api.npoint.io/df4d86c7cd7b69ad3603';
+    const apiAlltime = 'https://api.npoint.io/b56606bb3536eb445851';
+    let recent, alltime;
     try {
-      recent = await (await fetch(`${api}/recent`)).json();
-      alltime = await (await fetch(`${api}/alltime`)).json();
+      recent = await (await fetch(apiRecent)).json();
+      alltime = await (await fetch(apiAlltime)).json();
       this.setState({ recent, alltime, status: 'loaded' });
     } catch (e) {
       this.setState({ status: 'error' });
